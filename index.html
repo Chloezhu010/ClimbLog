@@ -203,20 +203,42 @@
 			border-radius: 4px;
 			font-size: 14px;
 		}
+
+		.toggle-btn {
+			padding: 8px 12px;
+			background: #f0f0f0;
+			color: #333;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 14px;
+			font-weight: bold;
+			margin-bottom: 15px;
+		}
+
+		.toggle-btn:hover {
+			background: #e0e0e0;
+		}
+
+		.config.hidden {
+			display: none;
+		}
 	</style>
 </head>
 <body>
 	<h2>📊 ClimbLog Commit Heatmap</h2>
 
-	<div class="config">
+	<button class="toggle-btn" onclick="toggleConfig()">⚙️ Settings</button>
+
+	<div class="config" id="configSection">
 		<div class="config-group">
 			<label>GitHub Username:</label>
-			<input type="text" id="username" value="Chloezhu010" placeholder="e.g., Chloezhu010">
+			<input type="text" id="username" value="Chloezhu010" placeholder="e.g., github_handle">
 		</div>
 
 		<div class="config-group">
 			<label>Repository Name:</label>
-			<input type="text" id="repo" value="ClimbLog" placeholder="e.g., ClimbLog">
+			<input type="text" id="repo" value="ClimbLog" placeholder="e.g., repo_name">
 		</div>
 
 		<button onclick="loadHeatmap()">Load Commits</button>
@@ -228,6 +250,11 @@
 	<div id="stats"></div>
 
 	<script>
+		function toggleConfig() {
+			const configSection = document.getElementById('configSection');
+			configSection.classList.toggle('hidden');
+		}
+
 		async function fetchCommits(username, repo) {
 			console.log(`Fetching commits for ${username}/${repo}...`);
 			const response = await fetch(
